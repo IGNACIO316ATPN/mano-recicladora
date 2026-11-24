@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="La Mano Habladora · Aprende la importancia del saneamiento básico y a separar residuos en los 5 contenedores jugando con la técnica de los 5 dedos." />
+  <meta name="theme-color" content="#0055ff" />
+  <title>La Mano Habladora · Saneamiento Básico y los 5 Contenedores</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       TOKENS DE DISEÑO
+       ============================================================ */
+    :root {
+      --azul: #0055ff;
+      --azul-oscuro: #0033aa;
+      --azul-suave: #e5efff;
+
+      --rojo: #ff0033;
+      --rojo-oscuro: #cc0022;
+      --rojo-suave: #ffe5eb;
+
+      --amarillo: #ffaa00;
+      --verde: #00c853;
+      --verde-oscuro: #009624;
+      --morado: #6600ff;
+      --negro: #111111;
+
+      --blanco: #ffffff;
+      --gris-50: #f8f9fa;
+      --gris-100: #f1f3f5;
+      --gris-200: #e9ecef;
+      --gris-300: #dee2e6;
+      --tinta: #111111;
+      --tinta-suave: #495057;
+      --tinta-clara: #adb5bd;
+
+      --fuente-titulo: 'Fraunces', Georgia, serif;
+      --fuente-texto: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --fuente-mano: 'Caveat', cursive;
+
+      --ancho-max: 1320px;
+      --radio-sm: 10px; --radio: 14px; --radio-lg: 20px; --radio-xl: 28px;
+
+      --sombra-sm: 0 2px 4px rgba(0,0,0,0.08);
+      --sombra: 0 4px 8px rgba(0,0,0,0.1);
+      --sombra-md: 0 8px 16px rgba(0,0,0,0.12);
+      --sombra-lg: 0 12px 24px rgba(0,0,0,0.15);
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --t-rap: all 0.15s var(--ease-smooth);
+      --t: all 0.28s var(--ease-smooth);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--fuente-texto);
+      color: var(--tinta);
+      line-height: 1.75;
+      font-size: 20px;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--gris-50);
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+    button { font: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--azul);
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    .skip-link {
+      position: absolute; top: -100px; left: 16px;
+      background: var(--azul); color: #fff;
+      padding: 14px 24px; border-radius: 0 0 12px 12px;
+      font-weight: 700; text-decoration: none; z-index: 10000;
+      transition: top 0.2s; font-size: 1.05rem;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ============================================================
+       ANIMACIONES
+       ============================================================ */
+    @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
+    @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-160px) rotate(540deg); opacity: 0; }
+    }
+    @keyframes shakeRed {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ============================================================
+       NAVBAR
+       ============================================================ */
+    .navbar {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 32px); max-width: var(--ancho-max); z-index: 999;
+      background: var(--blanco);
+      border: 2px solid var(--tinta);
+      border-radius: var(--radio-lg);
+      padding: 14px 26px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--sombra);
+    }
+    .navbar__logo {
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--fuente-titulo); font-weight: 900;
+      font-size: 1.3rem; color: var(--tinta);
+      text-decoration: none;
+    }
+    .navbar__logo-icon {
+      width: 46px; height: 46px; border-radius: var(--radio-sm);
+      background: var(--azul);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: var(--blanco);
+      transition: var(--t);
+    }
+    .navbar__logo:hover .navbar__logo-icon { transform: rotate(-8deg) scale(1.06); }
+    .navbar__menu { display: flex; align-items: center; gap: 6px; list-style: none; }
+    .navbar__link {
+      font-size: 1.05rem; font-weight: 700; color: var(--tinta-suave);
+      text-decoration: none; padding: 12px 18px; border-radius: 999px;
+      transition: var(--t-rap);
+    }
+    .navbar__link:hover, .navbar__link:focus-visible {
+      color: var(--blanco); background: var(--azul);
+    }
+    .navbar__cta {
+      font-size: 1.02rem; font-weight: 800; color: var(--blanco);
+      text-decoration: none; padding: 12px 26px; border-radius: 999px;
+      background: var(--rojo);
+      transition: var(--t-rap); white-space: nowrap;
+    }
+    .navbar__cta:hover, .navbar__cta:focus-visible {
+      background: var(--rojo-oscuro);
+      transform: translateY(-1px);
+    }
+    @media (max-width: 720px) { .navbar__menu { display: none; } }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      position: relative; min-height: 80vh; padding: 140px 24px 110px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--azul);
+      overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 8px;
+      background: var(--rojo);
+      z-index: 3;
+    }
+    .hero__inner {
+      max-width: var(--ancho-max); width: 100%; margin: 0 auto;
+      position: relative; z-index: 2; text-align: center; color: var(--blanco);
+    }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 0.92rem; font-weight: 800;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--blanco);
+      background: rgba(255,255,255,0.15);
+      padding: 12px 28px; border-radius: 999px;
+      border: 2px solid var(--blanco);
+      margin-bottom: 30px;
+      animation: slideUp 0.7s var(--ease-out-expo) 0.1s both;
+    }
+    .hero__badge-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--rojo);
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    .hero__title {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(2.6rem, 7vw, 5.4rem);
+      font-weight: 900; line-height: 1.05;
+      margin-bottom: 24px;
+      animation: slideUp 0.7s var(--ease-out-expo) 0.2s both;
+    }
+    .hero__title-grad { color: var(--rojo); display: inline-block; }
+    .hero__sub {
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      color: var(--blanco); font-weight: 500;
+      max-width: 780px; margin: 0 auto 40px; line-height: 1.75;
+      animation: slideUp 0.7s var(--ease-out-expo) 0.3s both;
+    }
+    .hero__actions {
+      display: flex; gap: 18px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 50px;
+      animation: slideUp 0.7s var(--ease-out-expo) 0.4s both;
+    }
+    .btn {
+      font-family: var(--fuente-texto); font-size: 1.15rem; font-weight: 800;
+      border: 2px solid transparent; border-radius: 999px; padding: 18px 36px;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+      text-decoration: none; transition: var(--t-rap);
+    }
+    .btn--primary { color: var(--rojo); background: var(--blanco); border-color: var(--blanco); }
+    .btn--primary:hover { transform: translateY(-2px); background: var(--rojo-suave); }
+    .btn--glass { color: var(--blanco); background: transparent; border-color: var(--blanco); }
+    .btn--glass:hover { background: var(--blanco); color: var(--azul); transform: translateY(-2px); }
+    .hero__hand { font-size: clamp(4rem, 10vw, 6rem); display: inline-block; animation: float 3.5s ease-in-out infinite; }
+
+    /* ============================================================
+       OBJETIVO
+       ============================================================ */
+    .objetivo {
+      max-width: var(--ancho-max); margin: -64px auto 0; padding: 0 24px;
+      position: relative; z-index: 5;
+      animation: slideUp 0.7s var(--ease-out-expo) 0.5s both;
+    }
+    .objetivo__card {
+      background: var(--blanco); border-radius: var(--radio-xl);
+      padding: 42px; box-shadow: var(--sombra-lg);
+      border: 2px solid var(--tinta);
+      display: grid; grid-template-columns: auto 1fr; gap: 32px;
+      align-items: center; transition: var(--t);
+    }
+    .objetivo__card:hover { transform: translateY(-2px); }
+    .objetivo__icono {
+      width: 110px; height: 110px; border-radius: var(--radio-lg);
+      background: var(--rojo);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.2rem; color: var(--blanco); flex-shrink: 0;
+    }
+    .objetivo__titulo {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(1.6rem, 2.8vw, 2.1rem); font-weight: 900;
+      color: var(--tinta); margin-bottom: 10px; line-height: 1.25;
+    }
+    .objetivo__titulo-grad { color: var(--azul); }
+    .objetivo__texto { font-size: 1.2rem; color: var(--tinta-suave); line-height: 1.75; }
+    .objetivo__texto strong { color: var(--tinta); font-weight: 800; }
+
+    /* ============================================================
+       INTRO TEÓRICA
+       ============================================================ */
+    .carta-intro { max-width: var(--ancho-max); margin: 0 auto; padding: 72px 24px 0; }
+    .carta-intro__hero {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 36px; align-items: center;
+      background: var(--blanco); border: 2px solid var(--tinta);
+      border-radius: var(--radio-xl); padding: 42px;
+      box-shadow: var(--sombra-lg); margin-bottom: 32px;
+      position: relative; overflow: hidden;
+    }
+    .carta-intro__hero::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 8px;
+      background: linear-gradient(90deg, var(--rojo), var(--amarillo), var(--azul));
+    }
+    .carta-intro__eyebrow {
+      display: inline-block; font-size: 0.92rem; font-weight: 800;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--azul); background: var(--azul-suave);
+      padding: 10px 22px; border-radius: 999px;
+      border: 2px solid var(--azul); margin-bottom: 16px;
+    }
+    .carta-intro__titulo {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-weight: 900; line-height: 1.15; color: var(--tinta); margin-bottom: 16px;
+    }
+    .carta-intro__titulo-grad { color: var(--rojo); }
+    .carta-intro__parrafo { font-size: 1.2rem; color: var(--tinta-suave); line-height: 1.8; margin-bottom: 16px; }
+    .carta-intro__parrafo strong { color: var(--tinta); font-weight: 800; }
+    .carta-intro__imagen { position: relative; display: flex; justify-content: center; align-items: center; min-height: 260px; }
+    .carta-intro__imagen img {
+      width: 100%; max-width: 430px; height: auto;
+      border-radius: var(--radio-lg); border: 2px solid var(--tinta);
+      box-shadow: var(--sombra-md); transition: var(--t); background: var(--gris-100); object-fit: cover;
+    }
+    .carta-intro__imagen img:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: var(--sombra-lg); }
+    .carta-intro__imagen::after {
+      content: "🌱"; position: absolute; top: -14px; right: 8px; font-size: 2.6rem;
+      background: var(--amarillo); width: 66px; height: 66px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--tinta); box-shadow: var(--sombra-sm);
+      animation: float 3.5s ease-in-out infinite;
+    }
+    .carta-intro__tipos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .tipo-card {
+      background: var(--blanco); border: 2px solid var(--tinta);
+      border-radius: var(--radio-lg); padding: 34px;
+      box-shadow: var(--sombra-sm); transition: var(--t);
+      position: relative; overflow: hidden;
+    }
+    .tipo-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; }
+    .tipo-card--formal::before { background: var(--azul); }
+    .tipo-card--informal::before { background: var(--rojo); }
+    .tipo-card:hover { transform: translateY(-4px); box-shadow: var(--sombra-md); }
+    .tipo-card__badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.88rem; font-weight: 900;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 999px; color: var(--blanco); margin-bottom: 14px;
+    }
+    .tipo-card--formal .tipo-card__badge { background: var(--azul); }
+    .tipo-card--informal .tipo-card__badge { background: var(--rojo); }
+    .tipo-card__titulo {
+      font-family: var(--fuente-titulo); font-size: 1.6rem; font-weight: 900;
+      color: var(--tinta); margin-bottom: 12px; line-height: 1.25;
+    }
+    .tipo-card__texto { font-size: 1.12rem; color: var(--tinta-suave); line-height: 1.7; margin-bottom: 14px; }
+    .tipo-card__texto strong { color: var(--tinta); font-weight: 800; }
+    .tipo-card__lista { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .tipo-card__lista li {
+      font-size: 1.08rem; color: var(--tinta-suave); line-height: 1.65;
+      padding-left: 26px; position: relative;
+    }
+    .tipo-card__lista li::before {
+      content: "•"; position: absolute; left: 6px; top: 0;
+      font-weight: 900; font-size: 1.3rem; color: var(--azul);
+    }
+    .tipo-card--informal .tipo-card__lista li::before { color: var(--rojo); }
+    .tipo-card__lista li strong { color: var(--tinta); font-weight: 800; }
+    .tipo-card__ejemplo {
+      background: var(--gris-50); border: 2px dashed var(--gris-300);
+      border-radius: var(--radio-sm); padding: 16px 18px;
+      font-family: var(--fuente-titulo); font-size: 1.12rem; color: var(--tinta); line-height: 1.6;
+    }
+    .tipo-card__ejemplo strong {
+      display: block; font-family: var(--fuente-texto);
+      font-size: 0.88rem; font-weight: 900; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--tinta-suave); margin-bottom: 4px;
+    }
+    .tipo-card__ejemplo em { font-style: italic; color: var(--azul-oscuro); }
+    .tipo-card--informal .tipo-card__ejemplo em { color: var(--rojo-oscuro); }
+
+    @media (max-width: 900px) {
+      .carta-intro__hero { grid-template-columns: 1fr; }
+      .carta-intro__imagen { order: -1; }
+      .carta-intro__imagen img { max-width: 300px; }
+    }
+    @media (max-width: 640px) {
+      .carta-intro { padding: 48px 20px 0; }
+      .carta-intro__hero { padding: 28px 20px; gap: 20px; }
+      .carta-intro__tipos { grid-template-columns: 1fr; }
+      .tipo-card { padding: 26px 20px; }
+    }
+
+    /* ============================================================
+       SECCIONES GENERALES
+       ============================================================ */
+    .section { max-width: var(--ancho-max); margin: 0 auto; padding: 80px 24px; }
+    .section__head { text-align: center; margin-bottom: 48px; }
+    .section__eyebrow {
+      display: inline-block; font-size: 0.95rem; font-weight: 800;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--azul); background: var(--azul-suave);
+      padding: 10px 22px; border-radius: 999px; margin-bottom: 16px;
+      border: 2px solid var(--azul);
+    }
+    .section__title {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(2.2rem, 4.2vw, 3.4rem); font-weight: 900;
+      line-height: 1.12; color: var(--tinta); margin-bottom: 14px;
+    }
+    .section__title-grad { color: var(--rojo); }
+    .section__sub {
+      font-size: 1.2rem; color: var(--tinta-suave);
+      max-width: 680px; margin: 0 auto; line-height: 1.7; font-weight: 500;
+    }
+
+    /* ============================================================
+       JUEGO
+       ============================================================ */
+    .juego { max-width: var(--ancho-max); margin: 0 auto; padding: 36px 24px; }
+    .juego-grid {
+      display: grid; grid-template-columns: minmax(340px, 1fr) 1.2fr;
+      gap: 28px; align-items: stretch;
+    }
+    @media (max-width: 900px) { .juego-grid { grid-template-columns: 1fr; } }
+
+    .mano-card {
+      background: var(--blanco); border-radius: var(--radio-xl);
+      padding: 28px; box-shadow: var(--sombra-md);
+      border: 2px solid var(--tinta);
+      display: flex; flex-direction: column; height: fit-content;
+    }
+    .mano-card__head {
+      text-align: center; margin-bottom: 14px; padding-bottom: 14px;
+      border-bottom: 2px solid var(--gris-200);
+    }
+    .mano-card__titulo {
+      font-family: var(--fuente-titulo); font-size: 1.6rem;
+      font-weight: 900; color: var(--tinta); margin-bottom: 4px;
+    }
+    .mano-card__sub { font-size: 1.05rem; font-weight: 600; color: var(--tinta-suave); }
+    .mano-svg {
+      width: 100%; max-width: 470px; display: block; margin: auto;
+      overflow: visible; min-height: 400px;
+    }
+    .dedo { cursor: pointer; transition: var(--t-rap); }
+    .dedo:hover path.sk { filter: brightness(0.95); }
+    .dedo:focus-visible { outline: none; }
+    .dedo:focus-visible path.sk { stroke: var(--amarillo); stroke-width: 7; }
+    .dedo.correcto path.sk { stroke: var(--verde-oscuro); stroke-width: 7; }
+    .dedo.incorrecto { animation: shakeRed 0.5s ease; }
+    .dedo.incorrecto path.sk { stroke: var(--rojo); stroke-width: 7; }
+    .dedo text.l {
+      font-family: var(--fuente-texto); font-weight: 900; font-size: 14px;
+      text-anchor: middle; paint-order: stroke; stroke: var(--blanco); stroke-width: 5px;
+      pointer-events: none;
+    }
+    .dedo text.e { font-size: 20px; text-anchor: middle; pointer-events: none; }
+
+    .panel {
+      background: var(--blanco); border-radius: var(--radio-xl);
+      box-shadow: var(--sombra-md); border: 2px solid var(--tinta);
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .panel__head {
+      padding: 22px 34px; background: var(--gris-50);
+      border-bottom: 2px solid var(--tinta);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .panel__pregunta {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(1.4rem, 2.8vw, 1.9rem); font-weight: 900; color: var(--tinta);
+    }
+    .panel__score {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 1.1rem; font-weight: 900; color: var(--blanco);
+      background: var(--azul); padding: 9px 20px; border-radius: 999px;
+    }
+    .panel__body { padding: 32px 34px 34px; flex: 1; display: flex; flex-direction: column; gap: 18px; }
+
+    .residuo-card {
+      background: var(--gris-50); border: 2px solid var(--tinta);
+      border-radius: var(--radio-lg); padding: 30px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      animation: popIn 0.35s var(--ease-out-expo);
+    }
+    .residuo-card__icono { font-size: 5.8rem; line-height: 1; margin-bottom: 10px; }
+    .residuo-card__nombre {
+      font-family: var(--fuente-titulo); font-size: clamp(1.6rem, 3vw, 2rem);
+      font-weight: 900; color: var(--tinta); margin-bottom: 6px;
+    }
+    .residuo-card__pista { font-size: 1.15rem; color: var(--tinta-suave); font-weight: 600; max-width: 500px; line-height: 1.6; }
+    .residuo-card__progreso {
+      margin-top: 16px; font-size: 0.95rem; font-weight: 800;
+      color: var(--tinta-suave); text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    .feedback {
+      border-radius: var(--radio); padding: 18px 20px;
+      font-size: 1.12rem; font-weight: 700; line-height: 1.6;
+      display: none; align-items: flex-start; gap: 10px;
+      animation: popIn 0.3s var(--ease-out-expo);
+    }
+    .feedback.visible { display: flex; }
+    .feedback--ok { background: #e6f9ee; border: 2px solid var(--verde); color: var(--verde-oscuro); }
+    .feedback--error { background: var(--rojo-suave); border: 2px solid var(--rojo); color: var(--rojo-oscuro); }
+    .feedback__icono { font-size: 1.8rem; line-height: 1; flex-shrink: 0; }
+
+    .panel__botones { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-sm {
+      font-family: var(--fuente-texto); font-size: 1.05rem; font-weight: 800;
+      border: 2px solid transparent; border-radius: 999px; padding: 14px 26px;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+      transition: var(--t-rap); color: var(--blanco);
+    }
+    .btn-sm--azul { background: var(--azul); }
+    .btn-sm--azul:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
+    .btn-sm--rojo { background: var(--rojo); }
+    .btn-sm--rojo:hover { background: var(--rojo-oscuro); transform: translateY(-1px); }
+    .btn-sm:disabled { background: var(--gris-300) !important; cursor: not-allowed; transform: none !important; }
+
+    /* ============================================================
+       PANTALLA FINAL DEL JUEGO
+       ============================================================ */
+    .final-card {
+      background: var(--blanco); border: 2px solid var(--tinta);
+      border-radius: var(--radio-xl); padding: 48px 36px;
+      box-shadow: var(--sombra-lg); text-align: center;
+      animation: popIn 0.4s var(--ease-out-expo);
+    }
+    .final-card__emoji { font-size: 6.5rem; margin-bottom: 14px; animation: float 3s ease-in-out infinite; }
+    .final-card__titulo {
+      font-family: var(--fuente-titulo); font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900; color: var(--tinta); margin-bottom: 10px;
+    }
+    .final-card__puntaje {
+      font-family: var(--fuente-titulo); font-size: clamp(3.4rem, 8vw, 4.8rem);
+      font-weight: 900; color: var(--azul); line-height: 1; margin: 14px 0;
+    }
+    .final-card__msg { font-size: 1.2rem; color: var(--tinta-suave); font-weight: 600; margin-bottom: 24px; line-height: 1.7; }
+    .final-card__resumen {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px; margin: 20px 0 28px;
+    }
+    .final-card__stat {
+      background: var(--gris-50); border: 2px solid var(--tinta);
+      border-radius: var(--radio-sm); padding: 16px 14px;
+    }
+    .final-card__stat-num {
+      font-family: var(--fuente-titulo); font-size: 2rem; font-weight: 900;
+      color: var(--tinta); display: block; line-height: 1.1;
+    }
+    .final-card__stat-label {
+      font-size: 0.88rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--tinta-suave);
+    }
+    .btn-grande {
+      font-family: var(--fuente-texto); font-size: 1.3rem; font-weight: 900;
+      border: 2px solid var(--tinta); border-radius: 999px; padding: 18px 44px;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+      transition: var(--t-rap); color: var(--blanco); background: var(--verde);
+    }
+    .btn-grande:hover { background: var(--verde-oscuro); transform: translateY(-2px); }
+
+    /* ============================================================
+       MAPA DE CONTENEDORES
+       ============================================================ */
+    .mapa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .mapa-card {
+      background: var(--blanco); border-radius: var(--radio);
+      padding: 30px 24px; text-align: center;
+      border: 2px solid var(--tinta); transition: var(--t);
+      box-shadow: var(--sombra-sm);
+    }
+    .mapa-card:hover { transform: translateY(-4px); box-shadow: var(--sombra-md); }
+    .mapa-card--verde { border-top: 8px solid var(--verde); }
+    .mapa-card--azul { border-top: 8px solid var(--azul); }
+    .mapa-card--amarillo { border-top: 8px solid var(--amarillo); }
+    .mapa-card--negro { border-top: 8px solid var(--negro); }
+    .mapa-card--rojo { border-top: 8px solid var(--rojo); }
+    .mapa-card__dedo { font-size: 3rem; margin-bottom: 10px; display: block; line-height: 1; }
+    .mapa-card__parte {
+      font-size: 0.95rem; font-weight: 900; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 8px; color: var(--tinta-suave);
+    }
+    .mapa-card__pregunta {
+      font-family: var(--fuente-titulo); font-size: 1.5rem; font-weight: 900;
+      color: var(--tinta); margin-bottom: 8px; line-height: 1.3;
+    }
+    .mapa-card__texto { font-size: 1.08rem; font-weight: 600; color: var(--tinta-suave); line-height: 1.6; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      background: var(--tinta); color: var(--blanco); text-align: center;
+      padding: 42px 24px; font-size: 1.1rem; margin-top: 48px; font-weight: 600;
+    }
+    .footer strong { color: var(--rojo); font-weight: 800; }
+
+    /* ============================================================
+       TOAST Y CONFETTI
+       ============================================================ */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(24px);
+      background: var(--tinta); color: var(--blanco); padding: 18px 32px; border-radius: var(--radio);
+      font-size: 1.1rem; font-weight: 700; box-shadow: var(--sombra-lg);
+      z-index: 9999; opacity: 0; transition: var(--t); pointer-events: none;
+      border-left: 6px solid var(--rojo); max-width: calc(100vw - 32px);
+    }
+    #toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .confetti {
+      position: fixed; width: 12px; height: 12px; z-index: 9998;
+      pointer-events: none; animation: confettiFall 1.6s ease-out forwards;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 640px) {
+      body { font-size: 19px; }
+      .hero { padding: 120px 20px 80px; min-height: auto; }
+      .objetivo { margin-top: -48px; }
+      .objetivo__card { grid-template-columns: 1fr; text-align: center; padding: 30px 22px; }
+      .objetivo__icono { margin: 0 auto; width: 84px; height: 84px; font-size: 2.4rem; }
+      .section { padding: 60px 20px; }
+      .juego { padding: 28px 20px; }
+      .panel__head { padding: 20px 24px; }
+      .panel__body { padding: 22px 24px 26px; }
+      .mano-card { padding: 20px; }
+      .residuo-card { padding: 24px; }
+      .residuo-card__icono { font-size: 4.2rem; }
+      .btn { width: 100%; justify-content: center; }
+      .btn-grande { width: 100%; justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a class="skip-link" href="#juego">Saltar al juego</a>
+
+  <nav class="navbar" aria-label="Menú principal">
+    <a class="navbar__logo" href="#">
+      <span class="navbar__logo-icon" aria-hidden="true">🖐️</span>
+      <span>La Mano Habladora</span>
+    </a>
+    <ul class="navbar__menu">
+      <li><a class="navbar__link" href="#aprende">Aprende</a></li>
+      <li><a class="navbar__link" href="#juego">Juego: La Mano Habladora</a></li>
+      <li><a class="navbar__link" href="#mapa">Los 5 Contenedores</a></li>
+    </ul>
+    <a class="navbar__cta" href="#juego">🎮 Jugar</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero__inner">
+      <span class="hero__badge">
+        <span class="hero__badge-dot" aria-hidden="true"></span>
+        Saneamiento Básico · 4.º de Primaria
+      </span>
+      <h1 class="hero__title">
+        La <span class="hero__title-grad">Mano Habladora</span><br>
+        te enseña a separar la basura
+      </h1>
+      <p class="hero__sub">
+        Usa los 5 dedos de tu mano para aprender a separar la basura en los contenedores correctos.
+        <strong>Así evitas enfermedades y cuidas tu escuela y tu comunidad</strong>.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#juego">🎮 Empezar a jugar</a>
+        <a class="btn btn--glass" href="#aprende">📚 Aprender primero</a>
+      </div>
+      <div class="hero__hand" aria-hidden="true">🖐️</div>
+    </div>
+  </header>
+
+  <section class="objetivo" aria-label="Objetivo del taller">
+    <div class="objetivo__card">
+      <div class="objetivo__icono" aria-hidden="true">🎯</div>
+      <div>
+        <h2 class="objetivo__titulo">
+          ¿Qué vas a lograr hoy? <span class="objetivo__titulo-grad">Aprender jugando</span>
+        </h2>
+        <p class="objetivo__texto">
+          Cada dedo representa un <strong>contenedor de basura</strong>: verde, azul, amarillo, negro y rojo.
+          Aprenderás qué va en cada uno y pondrás a prueba lo aprendido en un <strong>juego de clasificación</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="carta-intro" id="aprende" aria-labelledby="carta-intro-titulo">
+    <div class="carta-intro__hero">
+      <div class="carta-intro__texto">
+        <span class="carta-intro__eyebrow">Antes de jugar · Aprende</span>
+        <h2 class="carta-intro__titulo" id="carta-intro-titulo">
+          Importancia del Saneamiento Básico: <span class="carta-intro__titulo-grad">Cuidado de la Salud</span>
+        </h2>
+        <p class="carta-intro__parrafo">
+          El <strong>saneamiento básico</strong> es mantener limpios los lugares donde vivimos: la casa,
+          la escuela y la comunidad. Incluye agua limpia, baños aseados y, sobre todo,
+          <strong>botar la basura en su lugar</strong>.
+        </p>
+        <p class="carta-intro__parrafo">
+          Cuando la basura se mezcla o se deja tirada, aparecen <strong>moscas, ratas y bacterias</strong>
+          que causan enfermedades. Si separamos los residuos en contenedores,
+          <strong>cuidamos nuestra salud y la de todos</strong>.
+        </p>
+      </div>
+      <div class="carta-intro__imagen">
+        <img
+          src="reci.jpg"
+          alt="Ilustración de niños separando residuos en contenedores de colores y cuidando el medio ambiente"
+          width="430" height="430" loading="lazy"
+        />
+      </div>
+    </div>
+
+    <div class="carta-intro__tipos">
+      <article class="tipo-card tipo-card--formal">
+        <span class="tipo-card__badge">♻️ Aprovechables · Se reciclan</span>
+        <h3 class="tipo-card__titulo">Residuos Aprovechables</h3>
+        <p class="tipo-card__texto">
+          Son los residuos que <strong>todavía pueden servir</strong> para hacer cosas nuevas.
+          Si los separamos bien, no se convierten en basura.
+        </p>
+        <ul class="tipo-card__lista">
+          <li><strong>¿Qué son?</strong> Papel, cartón, plástico limpio, latas y restos orgánicos como cáscaras.</li>
+          <li><strong>¿Para qué sirven?</strong> Con los orgánicos se hace <strong>abono</strong>. Con papel, plástico y latas se fabrican <strong>nuevos objetos</strong>.</li>
+        </ul>
+        <div class="tipo-card__ejemplo">
+          <strong>Ejemplo</strong>
+          Contenedor azul: <em>hojas usadas, cajas limpias</em><br>
+          Contenedor verde: <em>cáscaras de fruta, hojas secas</em>
+        </div>
+      </article>
+
+      <article class="tipo-card tipo-card--informal">
+        <span class="tipo-card__badge">🚫 No aprovechables · ¡Cuidado!</span>
+        <h3 class="tipo-card__titulo">Residuos No Aprovechables y Peligrosos</h3>
+        <p class="tipo-card__texto">
+          Son los residuos que <strong>ya no se pueden reciclar</strong> o que pueden
+          <strong>lastimarnos o enfermarnos</strong> si los tocamos sin cuidado.
+        </p>
+        <ul class="tipo-card__lista">
+          <li><strong>¿Qué son?</strong> Servilletas sucias, envolturas, restos de barrido, pilas, focos rotos y jeringas.</li>
+          <li><strong>¿Por qué tener cuidado?</strong> Las pilas y focos tienen sustancias tóxicas; las jeringas pueden transmitir enfermedades.</li>
+        </ul>
+        <div class="tipo-card__ejemplo">
+          <strong>Ejemplo</strong>
+          Contenedor negro: <em>servilletas sucias, envolturas</em><br>
+          Contenedor rojo: <em>pilas, focos, jeringas</em>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="juego" aria-labelledby="juego-titulo">
+    <div class="section__head">
+      <span class="section__eyebrow">¡A jugar!</span>
+      <h2 class="section__title" id="juego-titulo">
+        ¡Ayuda a la Mano a <span class="section__title-grad">separar la basura</span>!
+      </h2>
+      <p class="section__sub">Cada partida tiene 15 residuos distintos. Si fallas, pasas al siguiente. ¡Cada acierto suma 10 puntos!</p>
+    </div>
+
+    <div class="juego-grid">
+      <div class="mano-card">
+        <div class="mano-card__head">
+          <h3 class="mano-card__titulo">🖐️ Tu mano guía</h3>
+          <p class="mano-card__sub">Toca el dedo del color correcto</p>
+        </div>
+        <svg class="mano-svg" id="manoSVG" viewBox="0 0 400 470" role="group" aria-label="Mano con los cinco contenedores de basura"></svg>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head">
+          <p class="panel__pregunta">¿En qué dedo va este residuo?</p>
+          <span class="panel__score" id="scoreDisplay">⭐ 0 pts</span>
+        </div>
+        <div class="panel__body" id="panelBody">
+          <div class="residuo-card" id="residuoCard">
+            <span class="residuo-card__icono" id="residuoIcono" aria-hidden="true">🍌</span>
+            <p class="residuo-card__nombre" id="residuoNombre">Cáscara de plátano</p>
+            <p class="residuo-card__pista" id="residuoPista">Es un resto de comida, se puede convertir en abono.</p>
+            <p class="residuo-card__progreso" id="residuoProgreso">Residuo 1 de 15</p>
+          </div>
+
+          <div class="feedback" id="feedback" role="status" aria-live="polite">
+            <span class="feedback__icono" id="feedbackIcono" aria-hidden="true">✅</span>
+            <span id="feedbackTexto"></span>
+          </div>
+
+          <div class="panel__botones">
+            <button class="btn-sm btn-sm--azul" id="btnEscuchar" type="button">🔊 Escuchar residuo</button>
+            <button class="btn-sm btn-sm--rojo" id="btnReiniciar" type="button">🔄 Reiniciar juego</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="mapa" aria-labelledby="mapa-titulo">
+    <div class="section__head">
+      <span class="section__eyebrow">Repaso visual</span>
+      <h2 class="section__title" id="mapa-titulo">
+        Cada dedo es un <span class="section__title-grad">contenedor de basura</span>
+      </h2>
+      <p class="section__sub">Guía rápida de los 5 contenedores. ¡Úsala antes o durante el juego!</p>
+    </div>
+
+    <div class="mapa-grid">
+      <div class="mapa-card mapa-card--verde">
+        <span class="mapa-card__dedo" aria-hidden="true">👍</span>
+        <p class="mapa-card__parte">Verde · Orgánico</p>
+        <p class="mapa-card__pregunta">¿Qué va aquí?</p>
+        <p class="mapa-card__texto">Cáscaras de frutas, restos de comida, hojas secas. Sirve para hacer abono.</p>
+      </div>
+      <div class="mapa-card mapa-card--azul">
+        <span class="mapa-card__dedo" aria-hidden="true">☝️</span>
+        <p class="mapa-card__parte">Azul · Papel y Cartón</p>
+        <p class="mapa-card__pregunta">¿Qué va aquí?</p>
+        <p class="mapa-card__texto">Hojas de cuaderno usadas, periódicos y cajas de cartón limpias.</p>
+      </div>
+      <div class="mapa-card mapa-card--amarillo">
+        <span class="mapa-card__dedo" aria-hidden="true">🖕</span>
+        <p class="mapa-card__parte">Amarillo · Plásticos y Latas</p>
+        <p class="mapa-card__pregunta">¿Qué va aquí?</p>
+        <p class="mapa-card__texto">Botellas descartables, bolsas limpias y latas de refresco.</p>
+      </div>
+      <div class="mapa-card mapa-card--negro">
+        <span class="mapa-card__dedo" aria-hidden="true">💍</span>
+        <p class="mapa-card__parte">Negro · Basura Común</p>
+        <p class="mapa-card__pregunta">¿Qué va aquí?</p>
+        <p class="mapa-card__texto">Servilletas sucias, envolturas de golosinas y restos de barrido.</p>
+      </div>
+      <div class="mapa-card mapa-card--rojo">
+        <span class="mapa-card__dedo" aria-hidden="true">🤙</span>
+        <p class="mapa-card__parte">Rojo · Basura Peligrosa</p>
+        <p class="mapa-card__pregunta">¿Qué va aquí?</p>
+        <p class="mapa-card__texto">Pilas, focos rotos, medicamentos vencidos y jeringas.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <strong>La Mano Habladora · Saneamiento Básico · Salud y Medio Ambiente</strong><br>
+    Unidad Educativa "España"
+  </footer>
+
+  <script>
+    "use strict";
+
+    /* ============================================================
+       CONFIGURACIÓN: 5 DEDOS / CONTENEDORES
+       ============================================================ */
+    const DEDOS = [
+      { id: "organico",  parte: "Orgánico",  color: "#00c853", emoji: "🥬",
+        base: [115, 370], tip: [48, 262], ancho: [58, 46] },
+      { id: "papel",     parte: "Papel",     color: "#0055ff", emoji: "📄",
+        base: [140, 295], tip: [126, 118], ancho: [50, 42] },
+      { id: "plastico",  parte: "Plástico",  color: "#ffaa00", emoji: "🥤",
+        base: [197, 295], tip: [197, 80], ancho: [52, 44] },
+      { id: "comun",     parte: "Común",     color: "#111111", emoji: "🗑️",
+        base: [254, 295], tip: [266, 108], ancho: [48, 40] },
+      { id: "peligroso", parte: "Peligroso", color: "#ff0033", emoji: "⚠️",
+        base: [294, 325], tip: [340, 192], ancho: [42, 34] }
+    ];
+
+    /* ============================================================
+       BASE DE DATOS DE RESIDUOS — 60 RESIDUOS (12 por contenedor)
+       Cada partida toma 15 al azar, sin repetir.
+       ============================================================ */
+    const RESIDUOS = [
+      /* ---------------- VERDE · ORGÁNICO (12) ---------------- */
+      { nombre: "Cáscara de plátano", icono: "🍌", correcto: "organico",
+        pista: "Es un resto de comida, se puede convertir en abono.",
+        ok: "¡Excelente! La cáscara de plátano va al contenedor VERDE para hacer abono.",
+        error: "¡Casi! Los restos de comida van en el dedo VERDE (Orgánico)." },
+      { nombre: "Restos de manzana", icono: "🍎", correcto: "organico",
+        pista: "Es un resto orgánico que sirve para abonar plantas.",
+        ok: "¡Muy bien! Los restos de manzana van al contenedor VERDE.",
+        error: "¡Casi! Los restos de fruta van en el dedo VERDE (Orgánico)." },
+      { nombre: "Cáscara de naranja", icono: "🍊", correcto: "organico",
+        pista: "Es cáscara de fruta, sirve para hacer abono.",
+        ok: "¡Excelente! La cáscara de naranja va al contenedor VERDE.",
+        error: "¡Casi! Las cáscaras de fruta van en el dedo VERDE (Orgánico)." },
+      { nombre: "Hojas secas", icono: "🍂", correcto: "organico",
+        pista: "Son restos de plantas, se convierten en abono.",
+        ok: "¡Muy bien! Las hojas secas van al contenedor VERDE.",
+        error: "¡Casi! Las hojas secas van en el dedo VERDE (Orgánico)." },
+      { nombre: "Restos de lechuga", icono: "🥬", correcto: "organico",
+        pista: "Es verdura, un resto orgánico que se abona.",
+        ok: "¡Excelente! Los restos de lechuga van al contenedor VERDE.",
+        error: "¡Casi! Las verduras van en el dedo VERDE (Orgánico)." },
+      { nombre: "Cáscara de huevo", icono: "🥚", correcto: "organico",
+        pista: "Es un resto orgánico que sirve para el abono.",
+        ok: "¡Muy bien! La cáscara de huevo va al contenedor VERDE.",
+        error: "¡Casi! La cáscara de huevo va en el dedo VERDE (Orgánico)." },
+      { nombre: "Restos de tomate", icono: "🍅", correcto: "organico",
+        pista: "Es un resto de comida que se convierte en abono.",
+        ok: "¡Excelente! Los restos de tomate van al contenedor VERDE.",
+        error: "¡Casi! Los restos de comida van en el dedo VERDE (Orgánico)." },
+      { nombre: "Cáscara de papa", icono: "🥔", correcto: "organico",
+        pista: "Es cáscara de verdura, sirve para abono.",
+        ok: "¡Muy bien! La cáscara de papa va al contenedor VERDE.",
+        error: "¡Casi! Las cáscaras de verdura van en el dedo VERDE (Orgánico)." },
+      { nombre: "Restos de pan", icono: "🍞", correcto: "organico",
+        pista: "Es un resto de comida orgánica.",
+        ok: "¡Excelente! Los restos de pan van al contenedor VERDE.",
+        error: "¡Casi! Los restos de comida van en el dedo VERDE (Orgánico)." },
+      { nombre: "Cáscara de sandía", icono: "🍉", correcto: "organico",
+        pista: "Es cáscara de fruta, se puede abonar.",
+        ok: "¡Muy bien! La cáscara de sandía va al contenedor VERDE.",
+        error: "¡Casi! Las cáscaras de fruta van en el dedo VERDE (Orgánico)." },
+      { nombre: "Restos de zanahoria", icono: "🥕", correcto: "organico",
+        pista: "Es verdura, un resto orgánico aprovechable.",
+        ok: "¡Excelente! Los restos de zanahoria van al contenedor VERDE.",
+        error: "¡Casi! Las verduras van en el dedo VERDE (Orgánico)." },
+      { nombre: "Flores marchitas", icono: "🌻", correcto: "organico",
+        pista: "Son restos de plantas que se convierten en abono.",
+        ok: "¡Muy bien! Las flores marchitas van al contenedor VERDE.",
+        error: "¡Casi! Los restos de plantas van en el dedo VERDE (Orgánico)." },
+
+      /* ---------------- AZUL · PAPEL Y CARTÓN (12) ---------------- */
+      { nombre: "Cuaderno viejo", icono: "📓", correcto: "papel",
+        pista: "Es de papel, se puede reciclar.",
+        ok: "¡Excelente! El cuaderno viejo va al contenedor AZUL de papel y cartón.",
+        error: "¡Casi! El papel va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Caja de cartón", icono: "📦", correcto: "papel",
+        pista: "Es cartón limpio, se puede reciclar.",
+        ok: "¡Muy bien! La caja de cartón va al contenedor AZUL.",
+        error: "¡Casi! El cartón va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Periódico viejo", icono: "📰", correcto: "papel",
+        pista: "Es papel de periódico, se recicla.",
+        ok: "¡Excelente! El periódico viejo va al contenedor AZUL.",
+        error: "¡Casi! El periódico va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Hoja de cuaderno usada", icono: "📄", correcto: "papel",
+        pista: "Es papel limpio, se puede reciclar.",
+        ok: "¡Muy bien! La hoja usada va al contenedor AZUL.",
+        error: "¡Casi! Las hojas van en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Revista vieja", icono: "📖", correcto: "papel",
+        pista: "Es papel, se puede reciclar.",
+        ok: "¡Excelente! La revista vieja va al contenedor AZUL.",
+        error: "¡Casi! Las revistas van en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Sobre de carta", icono: "✉️", correcto: "papel",
+        pista: "Es papel limpio, se recicla.",
+        ok: "¡Muy bien! El sobre de carta va al contenedor AZUL.",
+        error: "¡Casi! El papel va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Caja de cereal", icono: "🥣", correcto: "papel",
+        pista: "Es cartón limpio, se puede reciclar.",
+        ok: "¡Excelente! La caja de cereal va al contenedor AZUL.",
+        error: "¡Casi! El cartón va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Hoja de examen usada", icono: "📝", correcto: "papel",
+        pista: "Es papel, se puede reciclar.",
+        ok: "¡Muy bien! La hoja de examen va al contenedor AZUL.",
+        error: "¡Casi! El papel va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Cartulina usada", icono: "🎨", correcto: "papel",
+        pista: "Es cartón delgado, se recicla.",
+        ok: "¡Excelente! La cartulina usada va al contenedor AZUL.",
+        error: "¡Casi! La cartulina va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Guía telefónica vieja", icono: "📒", correcto: "papel",
+        pista: "Es papel, se puede reciclar.",
+        ok: "¡Muy bien! La guía telefónica va al contenedor AZUL.",
+        error: "¡Casi! El papel va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Caja de zapatos", icono: "👟", correcto: "papel",
+        pista: "Es cartón limpio, se puede reciclar.",
+        ok: "¡Excelente! La caja de zapatos va al contenedor AZUL.",
+        error: "¡Casi! El cartón va en el dedo AZUL (Papel y Cartón)." },
+      { nombre: "Folletos publicitarios", icono: "📃", correcto: "papel",
+        pista: "Es papel, se puede reciclar.",
+        ok: "¡Muy bien! Los folletos van al contenedor AZUL.",
+        error: "¡Casi! El papel va en el dedo AZUL (Papel y Cartón)." },
+
+      /* ---------------- AMARILLO · PLÁSTICOS Y LATAS (12) ---------------- */
+      { nombre: "Botella de plástico", icono: "🥤", correcto: "plastico",
+        pista: "Es plástico, se puede reciclar.",
+        ok: "¡Excelente! La botella de plástico va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Lata de refresco", icono: "🥫", correcto: "plastico",
+        pista: "Es una lata, se puede reciclar.",
+        ok: "¡Muy bien! La lata de refresco va al contenedor AMARILLO.",
+        error: "¡Casi! Las latas van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Bolsa plástica limpia", icono: "🛍️", correcto: "plastico",
+        pista: "Es plástico limpio, se puede reciclar.",
+        ok: "¡Excelente! La bolsa limpia va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Envase de yogur", icono: "🥛", correcto: "plastico",
+        pista: "Es plástico, se puede reciclar.",
+        ok: "¡Muy bien! El envase de yogur va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Lata de atún", icono: "🐟", correcto: "plastico",
+        pista: "Es una lata metálica, se recicla.",
+        ok: "¡Excelente! La lata de atún va al contenedor AMARILLO.",
+        error: "¡Casi! Las latas van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Botella de agua", icono: "💧", correcto: "plastico",
+        pista: "Es plástico, se puede reciclar.",
+        ok: "¡Muy bien! La botella de agua va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Tapa de plástico", icono: "🔘", correcto: "plastico",
+        pista: "Es plástico, se puede reciclar.",
+        ok: "¡Excelente! La tapa de plástico va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Vaso descartable limpio", icono: "🥂", correcto: "plastico",
+        pista: "Es plástico limpio, se recicla.",
+        ok: "¡Muy bien! El vaso descartable va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Lata de conserva", icono: "🥫", correcto: "plastico",
+        pista: "Es una lata metálica, se recicla.",
+        ok: "¡Excelente! La lata de conserva va al contenedor AMARILLO.",
+        error: "¡Casi! Las latas van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Envase de shampoo", icono: "🧴", correcto: "plastico",
+        pista: "Es plástico, se puede reciclar.",
+        ok: "¡Muy bien! El envase de shampoo va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Botella de gaseosa", icono: "🍾", correcto: "plastico",
+        pista: "Es plástico, se puede reciclar.",
+        ok: "¡Excelente! La botella de gaseosa va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+      { nombre: "Táper viejo", icono: "🍱", correcto: "plastico",
+        pista: "Es plástico, se puede reciclar.",
+        ok: "¡Muy bien! El táper viejo va al contenedor AMARILLO.",
+        error: "¡Casi! Los plásticos van en el dedo AMARILLO (Plásticos y Latas)." },
+
+      /* ---------------- NEGRO · BASURA COMÚN (12) ---------------- */
+      { nombre: "Servilleta sucia", icono: "🧻", correcto: "comun",
+        pista: "Está sucia, ya no se puede reciclar.",
+        ok: "¡Excelente! La servilleta sucia va al contenedor NEGRO.",
+        error: "¡Casi! La servilleta sucia va en el dedo NEGRO (Basura Común)." },
+      { nombre: "Envoltura de golosina", icono: "🍬", correcto: "comun",
+        pista: "Es una envoltura sucia, no se recicla.",
+        ok: "¡Muy bien! La envoltura va al contenedor NEGRO.",
+        error: "¡Casi! Las envolturas van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Pañuelo usado", icono: "🤧", correcto: "comun",
+        pista: "Está usado y sucio, no se recicla.",
+        ok: "¡Excelente! El pañuelo usado va al contenedor NEGRO.",
+        error: "¡Casi! Los pañuelos usados van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Restos de barrido", icono: "🧹", correcto: "comun",
+        pista: "Es polvo y suciedad, no se recicla.",
+        ok: "¡Muy bien! Los restos de barrido van al contenedor NEGRO.",
+        error: "¡Casi! Los restos de barrido van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Chicle usado", icono: "🍬", correcto: "comun",
+        pista: "Ya está usado, no se recicla.",
+        ok: "¡Excelente! El chicle usado va al contenedor NEGRO.",
+        error: "¡Casi! El chicle usado va en el dedo NEGRO (Basura Común)." },
+      { nombre: "Vaso descartable sucio", icono: "🥤", correcto: "comun",
+        pista: "Está sucio, ya no se puede reciclar.",
+        ok: "¡Muy bien! El vaso sucio va al contenedor NEGRO.",
+        error: "¡Casi! Los vasos sucios van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Papel higiénico usado", icono: "🧻", correcto: "comun",
+        pista: "Está sucio, no se recicla.",
+        ok: "¡Excelente! El papel higiénico usado va al contenedor NEGRO.",
+        error: "¡Casi! El papel higiénico usado va en el dedo NEGRO (Basura Común)." },
+      { nombre: "Colilla de cigarro", icono: "🚬", correcto: "comun",
+        pista: "Es un resto sucio, no se recicla.",
+        ok: "¡Muy bien! La colilla va al contenedor NEGRO.",
+        error: "¡Casi! Las colillas van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Envoltura de pan", icono: "🍞", correcto: "comun",
+        pista: "Es una envoltura sucia, no se recicla.",
+        ok: "¡Excelente! La envoltura de pan va al contenedor NEGRO.",
+        error: "¡Casi! Las envolturas sucias van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Paquete de galletas vacío", icono: "🍪", correcto: "comun",
+        pista: "Es un paquete sucio, no se recicla.",
+        ok: "¡Muy bien! El paquete vacío va al contenedor NEGRO.",
+        error: "¡Casi! Los paquetes sucios van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Servilleta con grasa", icono: "🍟", correcto: "comun",
+        pista: "Está manchada con grasa, no se recicla.",
+        ok: "¡Excelente! La servilleta con grasa va al contenedor NEGRO.",
+        error: "¡Casi! Las servilletas sucias van en el dedo NEGRO (Basura Común)." },
+      { nombre: "Restos de comida en mal estado", icono: "🍲", correcto: "comun",
+        pista: "Está en mal estado, no se puede reciclar.",
+        ok: "¡Muy bien! Los restos en mal estado van al contenedor NEGRO.",
+        error: "¡Casi! Los restos en mal estado van en el dedo NEGRO (Basura Común)." },
+
+      /* ---------------- ROJO · PELIGROSO (12) ---------------- */
+      { nombre: "Pila gastada", icono: "🔋", correcto: "peligroso",
+        pista: "Tiene sustancias tóxicas, es peligrosa.",
+        ok: "¡Excelente! La pila va al contenedor ROJO de basura peligrosa.",
+        error: "¡Casi! Las pilas van en el dedo ROJO (Peligroso). ¡Nunca en la basura común!" },
+      { nombre: "Foco roto", icono: "💡", correcto: "peligroso",
+        pista: "Se rompe fácil y es peligroso tocarlo.",
+        ok: "¡Muy bien! El foco roto va al contenedor ROJO.",
+        error: "¡Casi! Los focos rotos van en el dedo ROJO (Peligroso)." },
+      { nombre: "Jeringa usada", icono: "💉", correcto: "peligroso",
+        pista: "Puede transmitir enfermedades, es peligrosa.",
+        ok: "¡Excelente! La jeringa usada va al contenedor ROJO.",
+        error: "¡Casi! Las jeringas van en el dedo ROJO (Peligroso)." },
+      { nombre: "Medicamento vencido", icono: "💊", correcto: "peligroso",
+        pista: "Está vencido, es peligroso para la salud.",
+        ok: "¡Muy bien! El medicamento vencido va al contenedor ROJO.",
+        error: "¡Casi! Los medicamentos vencidos van en el dedo ROJO (Peligroso)." },
+      { nombre: "Termómetro roto", icono: "🌡️", correcto: "peligroso",
+        pista: "Contiene mercurio, es muy peligroso.",
+        ok: "¡Excelente! El termómetro roto va al contenedor ROJO.",
+        error: "¡Casi! Los termómetros rotos van en el dedo ROJO (Peligroso)." },
+      { nombre: "Pintura vencida", icono: "🎨", correcto: "peligroso",
+        pista: "Contiene químicos tóxicos, es peligrosa.",
+        ok: "¡Muy bien! La pintura vencida va al contenedor ROJO.",
+        error: "¡Casi! Las pinturas vencidas van en el dedo ROJO (Peligroso)." },
+      { nombre: "Aerosol vacío", icono: "🧴", correcto: "peligroso",
+        pista: "Puede explotar, es peligroso.",
+        ok: "¡Excelente! El aerosol vacío va al contenedor ROJO.",
+        error: "¡Casi! Los aerosoles van en el dedo ROJO (Peligroso)." },
+      { nombre: "Batería de celular", icono: "📱", correcto: "peligroso",
+        pista: "Tiene químicos tóxicos, es peligrosa.",
+        ok: "¡Muy bien! La batería de celular va al contenedor ROJO.",
+        error: "¡Casi! Las baterías van en el dedo ROJO (Peligroso)." },
+      { nombre: "Envase de cloro", icono: "🧪", correcto: "peligroso",
+        pista: "Contiene químicos, es peligroso.",
+        ok: "¡Excelente! El envase de cloro va al contenedor ROJO.",
+        error: "¡Casi! Los envases con químicos van en el dedo ROJO (Peligroso)." },
+      { nombre: "Aguja hipodérmica", icono: "💉", correcto: "peligroso",
+        pista: "Puede transmitir enfermedades, es peligrosa.",
+        ok: "¡Muy bien! La aguja hipodérmica va al contenedor ROJO.",
+        error: "¡Casi! Las agujas van en el dedo ROJO (Peligroso)." },
+      { nombre: "Insecticida vacío", icono: "🐜", correcto: "peligroso",
+        pista: "Contiene veneno, es peligroso.",
+        ok: "¡Excelente! El insecticida vacío va al contenedor ROJO.",
+        error: "¡Casi! Los insecticidas van en el dedo ROJO (Peligroso)." },
+      { nombre: "Foco fluorescente", icono: "💡", correcto: "peligroso",
+        pista: "Contiene mercurio, es peligroso.",
+        ok: "¡Muy bien! El foco fluorescente va al contenedor ROJO.",
+        error: "¡Casi! Los focos fluorescentes van en el dedo ROJO (Peligroso)." }
+    ];
+
+    /* ============================================================
+       CONFIGURACIÓN DE LA PARTIDA
+       ============================================================ */
+    const PREGUNTAS_POR_PARTIDA = 15;
+
+    /* ============================================================
+       ESTADO DEL JUEGO
+       ============================================================ */
+    let mezcla = [];
+    let indice = 0;
+    let puntaje = 0;
+    let aciertos = 0;
+    let errores = 0;
+    let bloqueado = false;
+    let juegoTerminado = false;
+    let toastTimer = null;
+
+    /* ============================================================
+       UTILIDADES
+       ============================================================ */
+    function toast(msg) {
+      let t = document.getElementById("toast");
+      if (!t) {
+        t = document.createElement("div");
+        t.id = "toast";
+        t.setAttribute("role", "status");
+        t.setAttribute("aria-live", "polite");
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.classList.add("visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove("visible"), 3200);
+    }
+
+    function confetti() {
+      const colores = ["#ff0033", "#ffaa00", "#00c853", "#0055ff", "#111111"];
+      for (let i = 0; i < 45; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.top = "60vh";
+        c.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
+        c.style.animationDelay = Math.random() * 0.4 + "s";
+        c.style.animationDuration = (1 + Math.random()) + "s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 2600);
+      }
+    }
+
+    function mezclarArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    /* Toma N residuos al azar sin repetir, garantizando variedad de contenedores */
+    function seleccionarResiduos(cantidad) {
+      const copia = mezclarArray(RESIDUOS);
+      const seleccionados = [];
+      const porContenedor = { organico: 0, papel: 0, plastico: 0, comun: 0, peligroso: 0 };
+      const maxPorContenedor = Math.ceil(cantidad / DEDOS.length) + 1;
+
+      for (const r of copia) {
+        if (seleccionados.length >= cantidad) break;
+        if (porContenedor[r.correcto] < maxPorContenedor) {
+          seleccionados.push(r);
+          porContenedor[r.correcto]++;
+        }
+      }
+      return mezclarArray(seleccionados);
+    }
+
+    /* ============================================================
+       DIBUJO DE LA MANO
+       ============================================================ */
+    function trazoDedo(f) {
+      const [[bx, by], [tx, ty], [wb, wt]] = [f.base, f.tip, f.ancho];
+      const dx = tx - bx, dy = ty - by;
+      const L = Math.hypot(dx, dy) || 1;
+      const nx = -dy / L, ny = dx / L;
+      const r = wt / 2;
+      const P = (x, y, k) => (x + nx * k).toFixed(1) + " " + (y + ny * k).toFixed(1);
+      return `M${P(bx, by, wb / 2)} L${P(tx, ty, r)} A${r} ${r} 0 0 0 ${P(tx, ty, -r)} L${P(bx, by, -wb / 2)} Z`;
+    }
+
+    function dibujarMano() {
+      const svg = document.getElementById("manoSVG");
+      if (!svg) return;
+
+      let s = '<defs><linearGradient id="piel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffdcbc"/><stop offset="1" stop-color="#f7b78a"/></linearGradient></defs>';
+      s += '<path d="M100 285 C88 350 105 410 140 452 L272 452 C308 405 318 350 304 290 Z" fill="url(#piel)" stroke="#111111" stroke-width="4"/>';
+
+      const orden = [1, 2, 3, 4, 0];
+
+      orden.forEach((i) => {
+        const f = DEDOS[i];
+        const [bx, by] = f.base;
+        const [tx, ty] = f.tip;
+        const dx = tx - bx, dy = ty - by;
+        const L = Math.hypot(dx, dy) || 1;
+        let ang = Math.atan2(dy, dx) * 180 / Math.PI;
+        if (ang < -90 || ang > 90) ang += 180;
+
+        const mx = bx + dx * 0.5;
+        const my = by + dy * 0.5;
+        const cx = tx - (dx / L) * (f.ancho[1] / 2 + 2);
+        const cy = ty - (dy / L) * (f.ancho[1] / 2 + 2);
+
+        s += `<g class="dedo" id="dedo${i}" data-dedo="${i}" tabindex="0" role="button" aria-label="${f.parte}, contenedor ${f.id}">
+          <path class="sk" d="${trazoDedo(f)}" fill="${f.color}" opacity="0.9" stroke="#111111" stroke-width="4"/>
+          <text class="l" fill="#ffffff" transform="rotate(${ang.toFixed(1)} ${mx} ${my})" x="${mx}" y="${my + 5}">${f.parte}</text>
+          <circle cx="${cx}" cy="${cy}" r="17" fill="#fff" stroke="#111111" stroke-width="4"/>
+          <text class="e" id="emoji${i}" x="${cx}" y="${cy + 6}">${f.emoji}</text>
+        </g>`;
+      });
+
+      s += `<g id="carita">
+        <circle cx="175" cy="365" r="8" fill="#111111"/>
+        <circle cx="232" cy="365" r="8" fill="#111111"/>
+        <circle cx="178" cy="362" r="2.5" fill="#fff"/>
+        <circle cx="235" cy="362" r="2.5" fill="#fff"/>
+        <circle cx="150" cy="390" r="9" fill="#ff0033" opacity=".6"/>
+        <circle cx="257" cy="390" r="9" fill="#ff0033" opacity=".6"/>
+        <path d="M170 392 Q203 430 238 392 Z" fill="#ff0033"/>
+      </g>`;
+
+      svg.innerHTML = s;
+
+      svg.querySelectorAll(".dedo").forEach((g) => {
+        const idx = Number(g.getAttribute("data-dedo"));
+        g.addEventListener("click", () => elegirDedo(idx));
+        g.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            elegirDedo(idx);
+          }
+        });
+      });
+    }
+
+    /* ============================================================
+       LÓGICA DEL JUEGO
+       ============================================================ */
+    function iniciarJuego() {
+      mezcla = seleccionarResiduos(PREGUNTAS_POR_PARTIDA);
+      indice = 0;
+      puntaje = 0;
+      aciertos = 0;
+      errores = 0;
+      bloqueado = false;
+      juegoTerminado = false;
+      actualizarScore();
+      renderizarResiduo();
+    }
+
+    function actualizarScore() {
+      document.getElementById("scoreDisplay").textContent = "⭐ " + puntaje + " pts";
+    }
+
+    function renderizarResiduo() {
+      if (indice >= mezcla.length) {
+        mostrarFinal();
+        return;
+      }
+      const r = mezcla[indice];
+      document.getElementById("residuoIcono").textContent = r.icono;
+      document.getElementById("residuoNombre").textContent = r.nombre;
+      document.getElementById("residuoPista").textContent = r.pista;
+      document.getElementById("residuoProgreso").textContent =
+        "Residuo " + (indice + 1) + " de " + mezcla.length;
+      document.getElementById("feedback").classList.remove("visible");
+
+      document.querySelectorAll(".dedo").forEach((g) => {
+        g.classList.remove("correcto", "incorrecto");
+      });
+    }
+
+    function avanzarSiguiente() {
+      indice++;
+      bloqueado = false;
+      renderizarResiduo();
+    }
+
+    function elegirDedo(idx) {
+      if (bloqueado || juegoTerminado) return;
+      const r = mezcla[indice];
+      if (!r) return;
+
+      const dedoEl = document.getElementById("dedo" + idx);
+      const feedback = document.getElementById("feedback");
+      const feedbackTexto = document.getElementById("feedbackTexto");
+      const feedbackIcono = document.getElementById("feedbackIcono");
+
+      if (DEDOS[idx].id === r.correcto) {
+        bloqueado = true;
+        puntaje += 10;
+        aciertos++;
+        actualizarScore();
+        dedoEl.classList.add("correcto");
+        feedback.className = "feedback feedback--ok visible";
+        feedbackIcono.textContent = "✅";
+        feedbackTexto.textContent = r.ok;
+        confetti();
+
+        setTimeout(avanzarSiguiente, 1300);
+      } else {
+        /* Error: salta automáticamente a la siguiente pregunta */
+        bloqueado = true;
+        errores++;
+        dedoEl.classList.add("incorrecto");
+        feedback.className = "feedback feedback--error visible";
+        feedbackIcono.textContent = "💡";
+        feedbackTexto.textContent = r.error + " Pasamos a la siguiente.";
+
+        setTimeout(avanzarSiguiente, 1500);
+      }
+    }
+
+    function obtenerMensajeFinal(aciertos, total) {
+      if (aciertos >= 10) {
+        return {
+          emoji: "🏆",
+          titulo: "¡Excelente trabajo!",
+          msg: "¡Eres un campeón del saneamiento básico! Sabes separar la basura como todo un experto y cuidas tu salud y la de tu comunidad. ¡Sigue así!"
+        };
+      }
+      if (aciertos >= 5) {
+        return {
+          emoji: "🙂",
+          titulo: "¡Buen trabajo!",
+          msg: "Vas por buen camino. Ya conoces varios contenedores, pero todavía puedes mejorar. ¡Inténtalo otra vez y verás que puedes lograrlo!"
+        };
+      }
+      return {
+        emoji: "💪",
+        titulo: "¡Sigue practicando!",
+        msg: "No te desanimes. Aprender a separar la basura toma tiempo. Vuelve a repasar los 5 contenedores y juega otra vez. ¡Cada intento te hace mejor!"
+      };
+    }
+
+    function mostrarFinal() {
+      juegoTerminado = true;
+      const total = mezcla.length;
+      const info = obtenerMensajeFinal(aciertos, total);
+      const porcentaje = Math.round((aciertos / total) * 100);
+
+      const body = document.getElementById("panelBody");
+      body.innerHTML = `
+        <div class="final-card">
+          <div class="final-card__emoji">${info.emoji}</div>
+          <h3 class="final-card__titulo">${info.titulo}</h3>
+          <p class="final-card__puntaje">${aciertos} / ${total}</p>
+          <div class="final-card__resumen">
+            <div class="final-card__stat">
+              <span class="final-card__stat-num">${aciertos}</span>
+              <span class="final-card__stat-label">Aciertos</span>
+            </div>
+            <div class="final-card__stat">
+              <span class="final-card__stat-num">${errores}</span>
+              <span class="final-card__stat-label">Errores</span>
+            </div>
+            <div class="final-card__stat">
+              <span class="final-card__stat-num">${porcentaje}%</span>
+              <span class="final-card__stat-label">Precisión</span>
+            </div>
+          </div>
+          <p class="final-card__msg">${info.msg}</p>
+          <button class="btn-grande" id="btnVolverJugar" type="button">🔄 Volver a jugar</button>
+        </div>
+      `;
+      document.getElementById("btnVolverJugar").addEventListener("click", reiniciarJuego);
+      if (aciertos >= 10) confetti();
+    }
+
+    function reiniciarJuego() {
+      const body = document.getElementById("panelBody");
+      body.innerHTML = `
+        <div class="residuo-card" id="residuoCard">
+          <span class="residuo-card__icono" id="residuoIcono" aria-hidden="true">🍌</span>
+          <p class="residuo-card__nombre" id="residuoNombre">Cáscara de plátano</p>
+          <p class="residuo-card__pista" id="residuoPista">Es un resto de comida, se puede convertir en abono.</p>
+          <p class="residuo-card__progreso" id="residuoProgreso">Residuo 1 de 15</p>
+        </div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite">
+          <span class="feedback__icono" id="feedbackIcono" aria-hidden="true">✅</span>
+          <span id="feedbackTexto"></span>
+        </div>
+        <div class="panel__botones">
+          <button class="btn-sm btn-sm--azul" id="btnEscuchar" type="button">🔊 Escuchar residuo</button>
+          <button class="btn-sm btn-sm--rojo" id="btnReiniciar" type="button">🔄 Reiniciar juego</button>
+        </div>
+      `;
+      bindPanelButtons();
+      iniciarJuego();
+      toast("🎮 ¡Nueva partida! 15 residuos al azar.");
+    }
+
+    /* ============================================================
+       VOZ (TTS)
+       ============================================================ */
+    function escucharResiduo() {
+      if (!window.speechSynthesis) {
+        toast("🔇 Tu navegador no puede leer en voz alta.");
+        return;
+      }
+      const r = mezcla[indice];
+      if (!r) return;
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+      }
+      const texto = "¿Dónde va " + r.nombre + "? " + r.pista;
+      const u = new SpeechSynthesisUtterance(texto);
+      u.lang = "es-ES";
+      u.rate = 0.95;
+      speechSynthesis.speak(u);
+      toast("🔊 Escuchando el residuo…");
+    }
+
+    /* ============================================================
+       BIND DE BOTONES DEL PANEL
+       ============================================================ */
+    function bindPanelButtons() {
+      const btnEscuchar = document.getElementById("btnEscuchar");
+      const btnReiniciar = document.getElementById("btnReiniciar");
+      if (btnEscuchar) btnEscuchar.addEventListener("click", escucharResiduo);
+      if (btnReiniciar) btnReiniciar.addEventListener("click", () => {
+        if (window.confirm("¿Reiniciar el juego? Se perderá el puntaje actual.")) {
+          reiniciarJuego();
+        }
+      });
+    }
+
+    /* ============================================================
+       INICIALIZACIÓN
+       ============================================================ */
+    document.addEventListener("DOMContentLoaded", () => {
+      dibujarMano();
+      bindPanelButtons();
+      iniciarJuego();
+    });
+  </script>
+</body>
+</html>
